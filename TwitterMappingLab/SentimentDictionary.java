@@ -54,13 +54,14 @@ public class SentimentDictionary
         {
             File sentimentFile = new File( fileName );
             Scanner in = new Scanner( sentimentFile );
-            in.useDelimiter( "[,\n]" );
+            in.useDelimiter( "[,\r\n]" );
             
             while( in.hasNext())
             {
                 String word = in.next();
                 Double sentiment = in.nextDouble();
                 dictionary.put( word, sentiment );
+                in.nextLine();
             }
             
             in.close();
