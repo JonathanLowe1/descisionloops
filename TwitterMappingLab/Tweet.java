@@ -19,7 +19,7 @@ public class Tweet
     /**
      * Default constructor for objects of class Tweet
      */
-    public Tweet(String user, String text, Date date)
+    public Tweet(String user, String text, Date date, twitter4j.GeoLocation location)
     {
         this.user = user;
         this.text = text;
@@ -58,12 +58,15 @@ public class Tweet
         Scanner s = new Scanner(text);
         double totalWords = 0;
         double totalSentiment = 0;
-        while(s.hasNext())
+        if (dict.getSentiment(s.next()) != null)
         {
-            totalSentiment += dict.getSentiment(s.next());
-            totalWords++;
+            while(s.hasNext())
+            {
+                totalSentiment += dict.getSentiment(s.next());
+                totalWords++;
+            }
+            sentiment = totalSentiment/totalWords;
         }
-        sentiment = totalSentiment/totalWords;
     }
     public String toString()
     {
