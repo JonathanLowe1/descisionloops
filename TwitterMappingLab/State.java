@@ -1,4 +1,4 @@
-import java.util.Date;
+ import java.util.Date;
 import java.io.IOException;
 import twitter4j.*;
 import java.lang.Math;
@@ -13,7 +13,7 @@ public class State
     private String abbreviation;
     private twitter4j.GeoLocation center;
     private double area;
-    private double sentiment;
+    public double sentiment;
     public State(String abbreviation, GeoLocation center, double area)
     {
         this.abbreviation = abbreviation;
@@ -40,6 +40,7 @@ public class State
     public void setSentiment(double sentiment)
     {
         this.sentiment = sentiment;
+   
     }
     public double getRadius()
     {
