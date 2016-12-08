@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="http://d3js.org/d3.v3.min.js">
+</script>
+<script src="http://d3js.org/topojson.v1.min.js">
+</script>
+<script src="datamaps.usa.js">
+</script>
+<h2>
+	Twitter Sentiment for Keyword
+Happy
+</h2>
+<div id="container1" style="position: relative; width: 80%; max-height: 800px;">
+</div>
+<script>
+	
+	var series = [
+["AL",0.0],
+["AK",0.0],
+["AZ",0.0],
+["AR",0.0],
+["CA",0.0],
+["CO",0.0],
+["CT",0.0],
+["DE",0.0],
+["FL",0.0],
+["GA",0.0],
+["HI",0.0],
+["ID",0.0],
+["IL",0.0],
+["IN",0.0],
+["IA",0.0],
+["KS",0.0],
+["KY",0.0],
+["LA",0.0],
+["ME",0.0],
+["MD",0.0],
+["MA",0.0],
+["MI",0.0],
+["MN",0.0],
+["MS",0.0],
+["MO",0.0],
+["MT",0.0],
+["NE",0.0],
+["NV",0.0],
+["NH",0.0],
+["NJ",0.0],
+["NM",0.0],
+["NY",0.0],
+["NC",0.0],
+["ND",0.0],
+["OH",0.0],
+["OK",0.0],
+["OR",0.0],
+["PA",0.0],
+["RI",0.0],
+["SC",0.0],
+["SD",0.0],
+["TN",0.0],
+["TX",0.0],
+["UT",0.0],
+["VT",0.0],
+["VA",0.0],
+["WA",0.0],
+["WV",0.0],
+["WI",0.0],
+["WY",0.0],
+	];
+	    // Datamaps expect data in format:
+	    // { "USA": { "fillColor": "#42a844", numberOfWhatever: 75},
+	    //   "FRA": { "fillColor": "#8dc386", numberOfWhatever: 43 } }
+	var dataset = {};
+	// We need to colorize every state based on "numberOfWhatever"
+	// colors should be uniq for every value.
+	// For this purpose we create palette(using min/max series-value)
+	var onlyValues = series.map(function(obj){ return obj[1]; });
+	var minValue = Math.min.apply(null, onlyValues),
+		maxValue = Math.max.apply(null, onlyValues);
+	// create color palette function
+	// color can be whatever you wish
+	var paletteScale = d3.scale.linear()
+		.domain([minValue,maxValue])
+		.range(["#EFEFFF","#02386F"]); // blue color
+	// fill dataset in appropriate format
+	series.forEach(function(item){ //
+		// item example value ["USA", 70]
+		var iso = item[0],
+		   	value = item[1];
+		dataset[iso] = { numberOfThings: value, fillColor: paletteScale(value) };
+		});
+	    
+	var map = new Datamap({
+		scope: 'usa',
+		element: document.getElementById('container1'),
+		height: 500,
+		fills: { defaultFill: '#F5F5F5' },
+        data: dataset,
+        geographyConfig: {
+            borderColor: '#DEDEDE',
+            highlightBorderWidth: 2,
+            // don't change color on mouse hover
+            highlightFillColor: function(geo) {
+                return geo['fillColor'] || '#F5F5F5';
+            },
+            // only change border
+            highlightBorderColor: '#B7B7B7',
+            // show desired information in tooltip
+            popupTemplate: function(geo, data) {
+                // don't show tooltip if STATE don't present in dataset
+                if (!data) { return ; }
+                // tooltip content
+                return ['<div class="hoverinfo">',
+                    '<strong>', geo.properties.name, '</strong>',
+                    '<br>Sentiment: <strong>', data.numberOfThings, '</strong>',
+                    '</div>'].join('');
+            }
+        }
+	 });
+</script>
+</body>

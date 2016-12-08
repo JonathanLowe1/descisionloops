@@ -13,7 +13,7 @@ public class State
     private String abbreviation;
     private twitter4j.GeoLocation center;
     private double area;
-    public double sentiment;
+    private double sentiment;
     public State(String abbreviation, GeoLocation center, double area)
     {
         this.abbreviation = abbreviation;
