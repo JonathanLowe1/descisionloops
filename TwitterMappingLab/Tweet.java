@@ -32,42 +32,45 @@ public class Tweet
     {
         return user;
     }
-     //Acessor for text
+    //Acessor for text
     public String getText()
     {
         return text;
     }
-     //Acessor for location
+    //Acessor for location
     public twitter4j.GeoLocation getLocation()
     {
         return location;
     }
-     //Acessor for date
+    //Acessor for date
     public Date getDate()
     {
         return date;
     }
-     //Acessor for sentiment    
+    //Acessor for sentiment    
     public Double getSentiment()
     {
         return sentiment;
     }
+
     public void calculateSentiment()
     {
         SentimentDictionary dict = SentimentDictionary.getSingleton();
         Scanner s = new Scanner(text);
         double totalWords = 0;
         double totalSentiment = 0;
-        if (dict.getSentiment(s.next()) != null)
+        while(s.hasNext())
         {
-            while(s.hasNext())
-            {
+            String token = s.next().toLowerCase();
+            if (dict.getSentiment(token) != null)
+            {  
                 totalSentiment += dict.getSentiment(s.next());
-                totalWords++;
-            }
-            sentiment = totalSentiment/totalWords;
+            }  
+            totalWords++;
         }
+        sentiment = totalSentiment/totalWords;
     }
+
     public String toString()
     {
         String str = "The user is " + user + " The text is " + text + " The location is " + location + " The date is " + date + " The sentiment is " + sentiment;

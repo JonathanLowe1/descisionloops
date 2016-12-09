@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
- 
+import java.util.Scanner; 
 import twitter4j.*;
- 
- 
 /**
  * This class queries Twitter for tweets in a specific state that contain a specified keyword. It then associates a sentiment
  *      with that tweet. The sentiment for all tweets in a state is aggregated and averaged. The resulting average sentiments
@@ -23,19 +20,16 @@ import twitter4j.*;
  * @author gcschmit (based on Twitter_Driver.java by Rita Galanos)
  * @version 07jul2016
  */
- 
+
 public class TwitterMapper
 {
     private Twitter twitter;
     private ArrayList<State> states;
     private String keyword;
     public int count = 0;
-   
     private static String HTML_TEMPLATE_FILENAME = "mapTemplate.html";
     private static String STATE_DATA_FILENAME = "states.csv";
     private static int MAX_TWEETS_PER_STATE = 100;
- 
-   
     /**
      * Standard main method for the program. Creates a TwitterMapper object for a given keyword, find tweets matching
      *      the keyword in each of the 50 US states, and then generates an HTML file visualizing the average sentiment
@@ -44,10 +38,10 @@ public class TwitterMapper
     public static void main ( String[] args ) throws TwitterException, IOException
     {
         TwitterMapper twitterMapper = new TwitterMapper( "coding" );
-        twitterMapper.tweetOut();
+        twitterMapper.findTweetsForAllStates();
+        twitterMapper.mapSentimentForAllStates();
     }
-   
-   
+
     /**
      * Constructor for objects of class TwitterMapper.
      *
@@ -56,14 +50,14 @@ public class TwitterMapper
     public TwitterMapper(String keyword)
     {
         this.keyword = keyword;
-       
+
         // make an instance of Twitter - this is re-useable and thread safe.
         twitter = new TwitterFactory().getInstance();
-       
+
         // load US state information
         loadStateInformation( STATE_DATA_FILENAME );
     }
- 
+
     /**
      * Publishes the specified tweet from the account associated with this project.
      *
@@ -73,7 +67,7 @@ public class TwitterMapper
     {
         twitter.updateStatus( message );
     }
- 
+
     /**
      * Searches Twitter for the specified number of tweets (MAX_TWEETS_PER_STATE) containing the keyword associated with this
      *      object in the specified state.
@@ -104,7 +98,7 @@ public class TwitterMapper
             }
         }
     }
-   
+
     /**
      * Searches Twitter for tweets containing the keyword associated with this object in each of the 50 US states.
      *      The sentiment of each tweet will be calculated and the average sentiment of tweets associated with each state
@@ -118,7 +112,7 @@ public class TwitterMapper
             findTweetsForState( state );
         }
     }
- 
+
     /**
      * Generates an HTML file that visualizes the resulting average sentiments for each states as a choropleth
      *      representing the sentiment of the tweets in each state.
@@ -133,13 +127,13 @@ public class TwitterMapper
         {
             File htmlTemplateFile = new File( HTML_TEMPLATE_FILENAME );
             Scanner in = new Scanner( htmlTemplateFile );
- 
+
             PrintWriter out = new PrintWriter( this.keyword + ".html" );
- 
+
             while( in.hasNextLine())
             {
                 String line = in.nextLine();
-               
+
                 if( line.contains( "### insert state data here ###" ))
                 {
                     // insert the sentiment values for each state according to the expected format
@@ -159,7 +153,7 @@ public class TwitterMapper
                     out.println( line );
                 }
             }
-           
+
             out.close();
             in.close();
         }
@@ -168,7 +162,7 @@ public class TwitterMapper
             System.out.println( "HTML Tempalte file: " + HTML_TEMPLATE_FILENAME + " not found." );
         }
     }
- 
+
     /**
      * Creates a list of state objects based on data in the specified file.
      *      
@@ -182,13 +176,13 @@ public class TwitterMapper
     private void loadStateInformation( String fileName )
     {
         this.states = new ArrayList<State>();
-       
+
         try
         {
             File statesFile = new File( fileName );
             Scanner in = new Scanner( statesFile );
             in.useDelimiter( "[,\r\n]" );
-           
+
             while( in.hasNext())
             {
                 String abbreviation = in.next();
@@ -198,7 +192,7 @@ public class TwitterMapper
                 in.nextLine();
                 this.states.add( new State( abbreviation, new GeoLocation( longitude, latitude ), area ));
             }
-           
+
             in.close();
         }
         catch( FileNotFoundException e )

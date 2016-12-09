@@ -1,4 +1,4 @@
- import java.util.Date;
+import java.util.Date;
 import java.io.IOException;
 import twitter4j.*;
 import java.lang.Math;
@@ -19,7 +19,7 @@ public class State
         this.abbreviation = abbreviation;
         this.center = center;
         this.area = area;
-        this.sentiment = sentiment;
+        this.sentiment = 0.0;
     }
     public String getAbbreviation()
     {
@@ -40,7 +40,6 @@ public class State
     public void setSentiment(double sentiment)
     {
         this.sentiment = sentiment;
-   
     }
     public double getRadius()
     {
@@ -51,5 +50,4 @@ public class State
     {
         return "The abbreviation is " + abbreviation + " ,the center is " + center + " ,the area is " + area + " ,the sentiment is " + sentiment;
     }
-    //comment
 }
