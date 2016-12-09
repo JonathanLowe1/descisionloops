@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="http://d3js.org/d3.v3.min.js">
+</script>
+<script src="http://d3js.org/topojson.v1.min.js">
+</script>
+<script src="datamaps.usa.js">
+</script>
+<h2>
+	Twitter Sentiment for Keyword
+baseball
+</h2>
+<div id="container1" style="position: relative; width: 80%; max-height: 800px;">
+</div>
+<script>
+	
+	var series = [
+["AL",-3.885779016074983E-4],
+["AK",-0.0024004793231014523],
+["AZ",-0.007481090931247226],
+["AR",0.005935177955681106],
+["CA",0.008755383784135123],
+["CO",0.0013340452068708432],
+["CT",0.021642361206783138],
+["DE",-0.00831644517190183],
+["FL",0.013562502916043932],
+["GA",-0.001073308366099707],
+["HI",-0.004185106745725474],
+["ID",0.01099597550520665],
+["IL",0.011252273149073273],
+["IN",0.009601514961758597],
+["IA",0.00651259149023],
+["KS",0.013268685493754677],
+["KY",0.006633176014803333],
+["LA",-0.001564004853720414],
+["ME",6.230128376581472E-4],
+["MD",0.014419716168564963],
+["MA",0.011431983181057436],
+["MI",0.003093126552707249],
+["MN",0.05696962072242215],
+["MS",-0.007375490967524707],
+["MO",0.008228474014127596],
+["MT",-6.895530353786064E-4],
+["NE",0.005684899706862107],
+["NV",0.01565411294020923],
+["NH",0.00943874214213751],
+["NJ",0.013189593483020845],
+["NM",0.0018528756121740557],
+["NY",0.0033323504797389217],
+["NC",0.010684060493599965],
+["ND",0.0022976264466770422],
+["OH",0.010949213730241207],
+["OK",0.0038192616937586],
+["OR",0.01420530038743879],
+["PA",0.006123522359115135],
+["RI",0.003677282595390452],
+["SC",0.00799355198899342],
+["SD",-0.013998944322254993],
+["TN",0.0016846764238602945],
+["TX",0.0035596732725497572],
+["UT",-9.868630351366925E-4],
+["VT",0.003762995043302791],
+["VA",0.010131436716616416],
+["WA",0.013763538817549078],
+["WV",0.006028432459353513],
+["WI",0.0028687382491301076],
+["WY",0.009695498576481363],
+	];
+	    // Datamaps expect data in format:
+	    // { "USA": { "fillColor": "#42a844", numberOfWhatever: 75},
+	    //   "FRA": { "fillColor": "#8dc386", numberOfWhatever: 43 } }
+	var dataset = {};
+	// We need to colorize every state based on "numberOfWhatever"
+	// colors should be uniq for every value.
+	// For this purpose we create palette(using min/max series-value)
+	var onlyValues = series.map(function(obj){ return obj[1]; });
+	var minValue = Math.min.apply(null, onlyValues),
+		maxValue = Math.max.apply(null, onlyValues);
+	// create color palette function
+	// color can be whatever you wish
+	var paletteScale = d3.scale.linear()
+		.domain([minValue,maxValue])
+		.range(["#EFEFFF","#02386F"]); // blue color
+	// fill dataset in appropriate format
+	series.forEach(function(item){ //
+		// item example value ["USA", 70]
+		var iso = item[0],
+		   	value = item[1];
+		dataset[iso] = { numberOfThings: value, fillColor: paletteScale(value) };
+		});
+	    
+	var map = new Datamap({
+		scope: 'usa',
+		element: document.getElementById('container1'),
+		height: 500,
+		fills: { defaultFill: '#F5F5F5' },
+        data: dataset,
+        geographyConfig: {
+            borderColor: '#DEDEDE',
+            highlightBorderWidth: 2,
+            // don't change color on mouse hover
+            highlightFillColor: function(geo) {
+                return geo['fillColor'] || '#F5F5F5';
+            },
+            // only change border
+            highlightBorderColor: '#B7B7B7',
+            // show desired information in tooltip
+            popupTemplate: function(geo, data) {
+                // don't show tooltip if STATE don't present in dataset
+                if (!data) { return ; }
+                // tooltip content
+                return ['<div class="hoverinfo">',
+                    '<strong>', geo.properties.name, '</strong>',
+                    '<br>Sentiment: <strong>', data.numberOfThings, '</strong>',
+                    '</div>'].join('');
+            }
+        }
+	 });
+</script>
+</body>

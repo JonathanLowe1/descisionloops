@@ -15,7 +15,7 @@ public class Tweet
     private String text;
     private twitter4j.GeoLocation location;
     private Date date;
-    private Double sentiment;
+    private Double sentiment = 0.0;
     /**
      * Default constructor for objects of class Tweet
      */
@@ -32,27 +32,26 @@ public class Tweet
     {
         return user;
     }
-    //Acessor for text
+     //Acessor for text
     public String getText()
     {
         return text;
     }
-    //Acessor for location
+     //Acessor for location
     public twitter4j.GeoLocation getLocation()
     {
         return location;
     }
-    //Acessor for date
+     //Acessor for date
     public Date getDate()
     {
         return date;
     }
-    //Acessor for sentiment    
+     //Acessor for sentiment    
     public Double getSentiment()
     {
         return sentiment;
     }
-
     public void calculateSentiment()
     {
         SentimentDictionary dict = SentimentDictionary.getSingleton();
@@ -63,15 +62,13 @@ public class Tweet
         while(s.hasNext())
         {
             token = s.next().toLowerCase();
-            if (dict.getSentiment(token) != null)
-            {  
+            if (dict.getSentiment(token) != null) {
                 totalSentiment += dict.getSentiment(token);
-            }  
+            }
             totalWords++;
         }
         sentiment = totalSentiment/totalWords;
     }
-
     public String toString()
     {
         String str = "The user is " + user + " The text is " + text + " The location is " + location + " The date is " + date + " The sentiment is " + sentiment;

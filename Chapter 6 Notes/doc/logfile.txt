@@ -1,14 +1,10 @@
 Class documentation
 <---- javadoc command: ---->
-C:\Program Files (x86)\Java\jdk1.8.0_101\bin\javadoc.exe
+C:\Program Files (x86)\BlueJ\jdk\bin\javadoc.exe
 -author
 -version
 -nodeprecated
--private
--tag
-pre:a:Precondition:
--tag
-post:a:Postcondition:
+-package
 -noindex
 -notree
 -nohelp
@@ -16,9 +12,9 @@ post:a:Postcondition:
 -source
 1.8
 -classpath
-C:\Program Files (x86)\BlueJ\lib\bluejcore.jar;C:\Program Files (x86)\BlueJ\lib\junit-4.8.2.jar;C:\Program Files (x86)\BlueJ\lib\userlib\pi4j-core.jar;C:\Program Files (x86)\BlueJ\lib\userlib\pi4j-device.jar;C:\Program Files (x86)\BlueJ\lib\userlib\pi4j-gpio-extension.jar;C:\Program Files (x86)\BlueJ\lib\userlib\pi4j-service.jar;C:\Users\jjlowe\GitHub\descisionloops\Chapter 6 Notes
+C:\Program Files (x86)\BlueJ\lib\bluejcore.jar;C:\Program Files (x86)\BlueJ\lib\junit-4.8.2.jar;C:\Users\Jonathan\Documents\GitHub\descisionloops\TwitterMappingLab\libs\twitter4j-core-4.0.4.jar;C:\Program Files (x86)\BlueJ\lib\userlib\pi4j-core.jar;C:\Program Files (x86)\BlueJ\lib\userlib\pi4j-device.jar;C:\Program Files (x86)\BlueJ\lib\userlib\pi4j-gpio-extension.jar;C:\Program Files (x86)\BlueJ\lib\userlib\pi4j-service.jar;C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes
 -d
-C:\Users\jjlowe\GitHub\descisionloops\Chapter 6 Notes\doc
+C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\doc
 -encoding
 UTF-8
 -charset
@@ -27,21 +23,46 @@ UTF-8
 C:\Program Files (x86)\BlueJ\lib\bjdoclet.jar
 -doclet
 bluej.doclet.doclets.formats.html.HtmlDoclet
-C:\Users\jjlowe\GitHub\descisionloops\Chapter 6 Notes\NumericalMethod.java
+C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\TwitterMapper.java
 <---- end of javadoc command ---->
-Loading source file C:\Users\jjlowe\GitHub\descisionloops\Chapter 6 Notes\NumericalMethod.java...
+Loading source file C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\TwitterMapper.java...
 Constructing Javadoc information...
-Standard Doclet version 1.8.0_101
+Standard Doclet version 1.8.0_40
 Building tree for all the packages and classes...
-Generating C:\Users\jjlowe\GitHub\descisionloops\Chapter 6 Notes\doc\NumericalMethod.html...
-Generating C:\Users\jjlowe\GitHub\descisionloops\Chapter 6 Notes\doc\package-frame.html...
-Generating C:\Users\jjlowe\GitHub\descisionloops\Chapter 6 Notes\doc\package-summary.html...
-Generating C:\Users\jjlowe\GitHub\descisionloops\Chapter 6 Notes\doc\constant-values.html...
+Generating C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\doc\TwitterMapper.html...
+C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\Notes.java:77: error: <identifier> expected
+    System.out.println( "done" );
+                      ^
+C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\Notes.java:77: error: illegal start of type
+    System.out.println( "done" );
+                        ^
+C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\Notes.java:87: error: illegal start of statement
+    }
+    ^
+C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\Notes.java:114: error: ';' expected
+        int sum = 0
+                   ^
+C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\Notes.java:139: error: ';' expected
+        int sum = 0
+                   ^
+C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\Notes.java:166: error: ';' expected
+        int sum = 0
+                   ^
+C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\Notes.java:183: error: ';' expected
+            value = s.nextInt()
+                               ^
+C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\Notes.java:77: error: cannot find symbol
+    System.out.println( "done" );
+          ^
+  symbol:   class out
+  location: class System
+Generating C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\doc\package-frame.html...
+Generating C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\doc\package-summary.html...
+Generating C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\doc\constant-values.html...
 Building index for all the packages and classes...
 Building index for all classes...
-Generating C:\Users\jjlowe\GitHub\descisionloops\Chapter 6 Notes\doc\allclasses-frame.html...
-Generating C:\Users\jjlowe\GitHub\descisionloops\Chapter 6 Notes\doc\allclasses-noframe.html...
-Generating C:\Users\jjlowe\GitHub\descisionloops\Chapter 6 Notes\doc\index.html...
-Generating C:\Users\jjlowe\GitHub\descisionloops\Chapter 6 Notes\doc\stylesheet.css...
-Note: Custom tags that could override future standard tags:  @pre, @post. To avoid potential overrides, use at least one period character (.) in custom tag names.
-Note: Custom tags that were not seen:  @pre, @post
+Generating C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\doc\allclasses-frame.html...
+Generating C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\doc\allclasses-noframe.html...
+Generating C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\doc\index.html...
+Generating C:\Users\Jonathan\Documents\GitHub\descisionloops\Chapter 6 Notes\doc\stylesheet.css...
+8 errors

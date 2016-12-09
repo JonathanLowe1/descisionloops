@@ -14,11 +14,11 @@ import twitter4j.*;
  *      are then represented in a choropleth representing the sentiment of the tweets in each state.
  *      
  * The data for the geographic center and area of each state was obtained from Wikipedia.
- *
+ * 
  * The data is plotted using the DataMaps Javascript framework: <http://datamaps.github.io>. Specifically, the HTML file is
  *      based on the Choropleth with auto-calculated color example:
  *      <https://github.com/markmarkoh/datamaps/blob/master/README.md#choropleth-with-auto-calculated-color>.
- *
+ * 
  * @author gcschmit (based on Twitter_Driver.java by Rita Galanos)
  * @version 07jul2016
  */
@@ -28,7 +28,6 @@ public class TwitterMapper
     private Twitter twitter;
     private ArrayList<State> states;
     private String keyword;
-    public int count = 0;
 
     private static String HTML_TEMPLATE_FILENAME = "mapTemplate.html";
     private static String STATE_DATA_FILENAME = "states.csv";
@@ -42,13 +41,13 @@ public class TwitterMapper
     public static void main ( String[] args ) throws TwitterException, IOException
     {
         TwitterMapper twitterMapper = new TwitterMapper( "baseball" );
-        twitterMapper.findTweetsForAllStates();
-        twitterMapper.mapSentimentForAllStates();
+
+
     }
 
     /**
      * Constructor for objects of class TwitterMapper.
-     *
+     * 
      * @param keyword the word that will be used to search for tweets
      */
     public TwitterMapper(String keyword)
@@ -60,11 +59,24 @@ public class TwitterMapper
 
         // load US state information
         loadStateInformation( STATE_DATA_FILENAME );
+
+        try {
+            findTweetsForAllStates();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TwitterException twe) {
+            twe.printStackTrace();
+        }
+
+        // finally, use the states ArrayList to create sentiment map
+        mapSentimentForAllStates();
+
     }
 
     /**
      * Publishes the specified tweet from the account associated with this project.
-     *
+     * 
      * @param  message   the text of the tweet to publish
      */
     public void tweetOut( String message ) throws TwitterException, IOException
@@ -83,7 +95,7 @@ public class TwitterMapper
      *          area as the state.
      *      
      * @param state search for tweets associated with this state
-     *
+     * 
      */
     public void findTweetsForState( State state) throws TwitterException
     {
@@ -95,7 +107,10 @@ public class TwitterMapper
         Query query = new Query(keyword).geoCode(geo, state.getRadius(), "mi");
         query.setCount(MAX_TWEETS_PER_STATE);
 
+
+        System.out.println("About to query Twitter for state " + state.getAbbreviation() + "...");
         QueryResult result = twitter.search(query);
+        System.out.println("Back from Twitter query");
         // with the getTweets API iterate through the returned QueryResult Status objects.
         java.util.List<Status> returnedTweets = result.getTweets();
         System.out.println("For state " + state.getAbbreviation() + ", num tweets: " + returnedTweets.size());
@@ -117,18 +132,26 @@ public class TwitterMapper
         } else {
             aveStateSentiment = totalStateSentiment / totalTweets;
         }
-        
+
+        System.out.println("findTweetsForState() " + state.getAbbreviation() + ": tweets returned = " + totalTweets +
+                ", totalStateSentiment = " + totalStateSentiment + ", average state sentiment: " + aveStateSentiment );
+
         state.setSentiment(aveStateSentiment);
+
     }
 
     /**
-     * Searches Twitter for tweets containing the keyword associated with this object in each of the 50 US states.
+     * Searches Twi/tter for tweets containing the keyword associated with this object in each of the 50 US states.
      *      The sentiment of each tweet will be calculated and the average sentiment of tweets associated with each state
      *      will be calculated.
-     *
+     * 
      */
     public void findTweetsForAllStates() throws TwitterException, IOException
     {
+//        findTweetsForState(states.get(0));
+//        findTweetsForState(states.get(1));
+
+
         for( State state : this.states )
         {
             findTweetsForState( state );
@@ -138,7 +161,7 @@ public class TwitterMapper
     /**
      * Generates an HTML file that visualizes the resulting average sentiments for each states as a choropleth
      *      representing the sentiment of the tweets in each state.
-     *
+     * 
      * This method reads from a template HTML file and creates a new HTML file into which is inserted the sentiment values
      *      for each state. The name of the HTML file is the name of the keyword.html.
      *      
@@ -189,11 +212,11 @@ public class TwitterMapper
      * Creates a list of state objects based on data in the specified file.
      *      
      * @param fileName search for tweets associated with this state
-     *
+     * 
      * @precondition the specified file must be a CSV file with four columns.
      *      The first contains the two-letter ANSI abbreviation for the state; the second, the longitude as a double;
      *              the third, the latitude as a double; the fourth, the area of the state in square miles.
-     *
+     * 
      */
     private void loadStateInformation( String fileName )
     {
